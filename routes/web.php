@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('/products', 'ProductController@index');
-Route::post('/products/new', 'ProductController@new');
-Route::post('/products/delete', 'ProductController@delete');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/products', 'ProductController@index')->name('product-add');
+Route::post('/products', 'ProductController@store')->name('save-product');
+Route::put('/products/{product}', 'ProductController@update')->name('update-product');
+Route::delete('/products/{product}', 'ProductController@destroy')->name('delete-product');
+
+Auth::routes();

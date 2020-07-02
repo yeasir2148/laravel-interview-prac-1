@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+@section('content')
+<div class="container">
+   <div class="row justify-content-center">
+      <div class="col-md-8">
+         <div class="card">
+            <div class="card-body">
+               @if (session('status'))
+               <div class="alert alert-success" role="alert">
+                  {{ session('status') }}
+               </div>
+               @endif
 
-        <title>HOME</title>
-    </head>
-    <body>
-        <a href="/products">Manage products</a>
-    </body>
-</html>
+               <a href="{{ route('product-add') }}">
+                  Manage Products
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+@endsection
