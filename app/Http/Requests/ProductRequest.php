@@ -24,7 +24,8 @@ class ProductRequest extends FormRequest
    public function rules()
    {
       return [
-         'name' => 'required|min:2|unique:products,name'
+         'name' => 'required|min:2|unique:products,name',
+         'description' => 'required|max:250'
       ];
    }
 
@@ -38,6 +39,8 @@ class ProductRequest extends FormRequest
       return [
          'name.required' => 'Name is required',
          'name.unique'  => 'This product name is taken alredy!',
+         'description.required' => 'Product description is required',
+         'description.max' => 'Description must be less than :max character'
       ];
    }
 }

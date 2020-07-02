@@ -10,10 +10,21 @@ class ProductTest extends TestCase
 {
    use RefreshDatabase;
 
-   protected function setUp(): void {
+   protected function setUp(): void
+   {
       parent::setUp();
       $user = factory(User::class)->make();
       $this->actingAs($user);
+   }
+
+   /** @test */
+   public function product_has_a_name_and_description()
+   {
+      $product = factory('App\Product')->raw();
+      $this->post('/products', $product);
+
+      $response = $this->post('/products', $product);
+      $this->assertDatabaseHas('products', $product);
    }
 
    /** @test */
@@ -30,5 +41,4 @@ class ProductTest extends TestCase
 
       $response->assertSessionHasErrors(['name']);
    }
-   
 }

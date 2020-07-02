@@ -22,7 +22,6 @@ class ProductsTest extends TestCase
    {
 
       $user = factory(User::class)->make();
-
       $this->actingAs($user);
 
       $product = factory('App\Product')->raw();

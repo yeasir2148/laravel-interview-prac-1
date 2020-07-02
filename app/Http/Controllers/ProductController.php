@@ -35,7 +35,7 @@ class ProductController extends Controller
    {
       $validated = $request->validated();
       $newProduct = Product::firstOrCreate(
-         ['name' => $validated['name']]
+         $validated
       );
 
       // This is done to add an extra layer of protection against duplicate product name in case in future we remove custom
