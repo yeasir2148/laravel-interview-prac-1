@@ -4,12 +4,12 @@
    <div class="container">
       <h1>Current Products</h1>
       @if (!empty($allProducts))
-         <ul class="list-group">
+         <ul class="list-group  w-50">
             @foreach ($allProducts as $product)
                <li class="list-group-item">
-                  <div class="row d-flex flex-row justify-content-start">
-                     <div class="col col-xs-3 d-inline-block">{{ $product->name }}</div>
-                     <div class="col col-xs-5">
+                  <div class="row d-flex justify-content-around">
+                     <div class="d-inline-block">{{ $product->name }}</div>
+                     <div class="">
                         <form action="{{ route('delete-product', ['product' => $product->id]) }}" method="POST">
                            @csrf
                            <input type="hidden" name="_method" value="DELETE">
@@ -24,6 +24,7 @@
          <p><em>No products have been created yet.</em></p>
       @endif
 
+      <br />
 
       @if (session('status'))
          <div class="alert-success">
@@ -31,7 +32,7 @@
          </div>
       @endif
 
-      <br>
+      <br />
 
       <h2>New product</h2>
       @auth

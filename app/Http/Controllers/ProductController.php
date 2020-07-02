@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Product;
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProductRequest;
+use App\Services\ProductServiceProvider;
 
 class ProductController extends Controller
 {
+   protected $serviceProvider;
    /**
     * Create a new controller instance.
     *
     * @return void
     */
-   public function __construct()
+   public function __construct(ProductServiceProvider $serviceProvider)
    {
       $this->middleware('auth')->except('index');
+      $this->serviceProvider = $serviceProvider;
    }
 
    public function index()
@@ -33,20 +33,7 @@ class ProductController extends Controller
     */
    public function store(ProductRequest $request)
    {
-      $validated = $request->validated();
-      $newProduct = Product::firstOrCreate(
-         $validated
-      );
-
-      // This is done to add an extra layer of protection against duplicate product name in case in future we remove custom
-      // form request
-      if ($newProduct->wasRecentlyCreated !== true) {
-         $response['success'] = false;
-         $response['message'] = 'Product already exists';
-      } else {
-         $response['success'] = true;
-         $response['data'] = $newProduct;
-      }
+      $newProduct = $this->serviceProvider->addEntity($request);
 
       return redirect(route('product-list'))->with('status', 'Product saved!');
    }
@@ -57,7 +44,7 @@ class ProductController extends Controller
     * @return Response
     */
    public function destroy($productId) {
-      $product = Product::destroy($productId);
+      $this->serviceProvider->deleteEntity($productId);
       return redirect(route('product-list'))->with('status', 'Product was deleted');
    }
 }
