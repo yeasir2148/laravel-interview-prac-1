@@ -38,21 +38,29 @@
       @auth
          <form action="{{ route('save-product') }}" method="POST">
             @csrf
-               <input type="text" name="name" placeholder="name" value="{{ old('name') }}" /><br />
+               <input class="form-control w-25"type="text" name="name" placeholder="name" value="{{ old('name') }}" /><br />
             @if($errors->has('name'))
                <div>
                   <span class="alert-danger">{{ $errors->first('name') }}</span>
                </div>
             @endif
 
-            <textarea name="description" placeholder="description">{{ old('description') }}</textarea><br />
+            <textarea class="form-control w-50" name="description" placeholder="description">{{ old('description') }}</textarea><br />
             @if($errors->has('description'))
                <div>
                   <span class="alert-danger">{{ $errors->first('description') }}</span>
                </div>
             @endif
-            <input type="text" name="tags" placeholder="tags" /><br />
-            <button type="submit">Submit</button>
+
+            <input class="form-control w-50" 
+               type="text" name="tags" 
+               placeholder="tags...comma(,) separated" value="{{ old('tags') }}" /><br />
+            @if($errors->has('tags'))
+               <div>
+                  <span class="alert-danger">{{ $errors->first('tags') }}</span>
+               </div>
+            @endif
+            <button type="submit" class="btn btn-primary">Submit</button>
          </form>
       @endauth
 

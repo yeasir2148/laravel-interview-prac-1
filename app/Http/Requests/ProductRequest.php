@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\TagSize;
 
 class ProductRequest extends FormRequest
 {
@@ -25,7 +26,8 @@ class ProductRequest extends FormRequest
    {
       return [
          'name' => 'required|min:2|unique:products,name',
-         'description' => 'required|max:250'
+         'description' => 'required|max:250',
+         'tags' => ['max:100', new TagSize]
       ];
    }
 
@@ -40,7 +42,8 @@ class ProductRequest extends FormRequest
          'name.required' => 'Name is required',
          'name.unique'  => 'This product name is taken alredy!',
          'description.required' => 'Product description is required',
-         'description.max' => 'Description must be less than :max character'
+         'description.max' => 'Description must be less than :max character',
+         'tags.max' => 'Max :max character in the tags field'
       ];
    }
 }
