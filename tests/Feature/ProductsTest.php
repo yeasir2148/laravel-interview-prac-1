@@ -11,7 +11,8 @@ class ProductsTest extends TestCase
 {
    use RefreshDatabase;
 
-   protected function setUp(): void {
+   protected function setUp(): void
+   {
       parent::setUp();
       $this->withoutExceptionHandling();
    }
@@ -28,5 +29,18 @@ class ProductsTest extends TestCase
       $response = $this->post('/products', $product);
 
       $this->assertDatabaseHas('products', $product);
+   }
+
+   /** @test */
+   public function authenticated_user_can_delete_a_product()
+   {
+
+      $user = factory(User::class)->make();
+      $this->actingAs($user);
+
+      $product = factory('App\Product')->create();
+      $this->delete("/products/{$product->id}");
+
+      $this->assertDatabaseMissing('products', $product->toArray());
    }
 }

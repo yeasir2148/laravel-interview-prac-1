@@ -11,7 +11,7 @@
                </div>
                @endif
 
-               <a href="{{ route('product-add') }}">
+               <a href="{{ route('product-list') }}">
                   Manage Products
                </a>
             </div>

@@ -15,30 +15,22 @@ class ProductController extends Controller
     *
     * @return void
     */
-   // public function __construct()
-   // {
-   //    $this->middleware('auth')->except('index');
-   // }
+   public function __construct()
+   {
+      $this->middleware('auth')->except('index');
+   }
 
    public function index()
    {
-      return view('products.index');
+      $allProducts = Product::all();
+      return view('products.index', compact("allProducts"));
    }
 
-   // public function new(Request $request)
-   // {
-   //    DB::insert("INSERT INTO products (name) VALUES ('" . $request->name . "')");
-
-   //    return redirect('/products')->with('status', 'Product saved');
-   // }
-
-   // public function delete(Request $request)
-   // {
-   //    DB::delete("DELETE FROM products WHERE id = " . $request->id);
-
-   //    return redirect('/products')->with('status', 'Product was deleted');
-   // }
-
+   /**
+    * Save a new product
+    * @param Object $request - instance of the ProductRequest form request
+    * @return Response
+    */
    public function store(ProductRequest $request)
    {
       $validated = $request->validated();
@@ -56,6 +48,16 @@ class ProductController extends Controller
          $response['data'] = $newProduct;
       }
 
-      return back()->with('status', 'Product saved!');
+      return redirect(route('product-list'))->with('status', 'Product saved!');
+   }
+
+   /**
+    * Delete a product
+    * @param Int $productId - Id of the product to be deleted
+    * @return Response
+    */
+   public function destroy($productId) {
+      $product = Product::destroy($productId);
+      return redirect(route('product-list'))->with('status', 'Product was deleted');
    }
 }

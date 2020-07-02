@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/products', 'ProductController@index')->name('product-add');
+Route::get('/products', 'ProductController@index')->name('product-list');
 Route::post('/products', 'ProductController@store')->name('save-product');
 Route::put('/products/{product}', 'ProductController@update')->name('update-product');
 Route::delete('/products/{product}', 'ProductController@destroy')->name('delete-product');

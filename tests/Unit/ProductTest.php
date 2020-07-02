@@ -25,6 +25,7 @@ class ProductTest extends TestCase
       $product1 = [
          'name' => $product['name']
       ];
+
       $response = $this->post('/products', $product1);
 
       $response->assertSessionHasErrors(['name']);
