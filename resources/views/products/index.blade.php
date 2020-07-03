@@ -9,6 +9,7 @@
                <li class="list-group-item">
                   <div class="row d-flex justify-content-around">
                      <div class="d-inline-block">{{ $product->name }}</div>
+                     @auth
                      <div class="">
                         <form action="{{ route('delete-product', ['product' => $product->id]) }}" method="POST">
                            @csrf
@@ -16,6 +17,7 @@
                            <button class="btn btn-danger" type="submit">delete</button>
                         </form>
                      </div>
+                     @endauth
                   </div>
                </li>
             @endforeach
