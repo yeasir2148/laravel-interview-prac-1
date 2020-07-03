@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductCreated;
 use App\Product;
 use App\Http\Requests\ProductRequest;
 use App\Services\ProductServiceProvider;
@@ -34,6 +35,10 @@ class ProductController extends Controller
    public function store(ProductRequest $request)
    {
       $newProduct = $this->serviceProvider->addEntity($request);
+
+      if($newProduct->wasRecentlyCreated) {
+         event(new ProductCreated($newProduct));
+      }
 
       return redirect(route('product-list'))->with('status', 'Product saved!');
    }
